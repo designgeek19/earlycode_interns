@@ -21,9 +21,9 @@
 
         /* Navigation */
         nav {
-            background: linear-gradient(135deg, #1a76d2 0%, #0f4c89 100%);
+            background: #FFFFFF;
             color: white;
-            padding: 15px 40px;
+            padding: 10px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,7 +40,7 @@
         }
 
         .logo-image img {
-            height: 40px; /* adjust size to fit navbar */
+            height: 34px; /* adjust size to fit navbar */
             width: auto;
             display: block;
         }
@@ -49,27 +49,30 @@
             font-size: 1.5rem;
             margin: 0;
             font-weight: bold;
-            color: #ffffff;
+            color: #1a76d2;
         }
 
         .logo-text h1 span {
-            color: #FFD43B; /* accent color for "code" */
+            color: #1a76d2; /* accent color for "code" */
         }
 
         .logo-text p {
             margin: 0;
-            font-size: 0.9rem;
-            color: #ffffff; /* lighter shade for subtitle */
+            font-size: 0.7rem;
+            color: #000000; /* lighter shade for subtitle */
             padding-top: -3;
+            font-weight:bolder;
+            opacity: 0.8;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 20px;
         }
 
         .nav-links a {
-            color: white;
+            color: black;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
@@ -83,32 +86,35 @@
         }
 
         .nav-links .login-btn {
-            background: #F6BC02;
-            color: #0f4c89;
+            background: linear-gradient(to right, #1a76d2, #0f4c89);
+            color: #ffffff;
             font-weight: 600;
             padding: 8px 20px;
         }
 
         .nav-links .login-btn:hover {
-            background: #e5ac01;
+            background: linear-gradient(to bottom right, #2499dd, #F6BC02);
             transform: translateY(-2px);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(26, 118, 210, 0.85), rgba(15, 76, 137, 0.9)), url(images/interns\ \(2\).jpg) center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(images/interns\ \(2\).jpg) center/cover no-repeat;
             color: white;
             padding: 100px 40px;
             text-align: center;
+            height: 70vh;
+            align-items: center;
+            display: flex;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .hero h2 {
-            font-size: 42px;
+            font-size: 50px;
             margin-bottom: 20px;
             font-weight: 700;
         }
@@ -121,8 +127,8 @@
 
         .cta-button {
             display: inline-block;
-            background: linear-gradient(to right, #F6BC02, #FFD43B);
-            color: #0f4c89;
+            background: linear-gradient(to right, #1a76d2, #0f4c89);
+            color: #ffffff;
             padding: 15px 40px;
             font-size: 18px;
             font-weight: 600;
@@ -133,6 +139,7 @@
         }
 
         .cta-button:hover {
+            background: linear-gradient(to bottom right, #2499dd, #F6BC02);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
@@ -408,7 +415,7 @@
 
         /* FAQs */
         .faqs {
-            background: linear-gradient(rgba(26, 118, 210, 0.6), rgba(15, 76, 137, 0.6)), url(images/workspace.jpg) center/cover no-repeat;
+             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(images/workspace.jpg) center/cover no-repeat;
         }
 
         .faq-container {
@@ -671,7 +678,7 @@
     </section>
 
     <!-- Internship Details -->
-    <section class="internship-details">
+    <section id="internship-details" class="internship-details">
         <div class="section-header">
             <h2>Internship Program</h2>
             <p>Our program is designed to provide IT students with hands-on experience and professional development</p>
@@ -713,9 +720,9 @@
         </div>
     </section>
 
-<!-- Requirements -->
-<section class="requirements">
-    <div class="section-header">
+    <!-- Requirements -->
+    <section id="requirements" class="requirements">
+        <div class="section-header">
         <h2>Requirements</h2>
         <p>What you need to join our internship program</p>
     </div>
@@ -784,7 +791,7 @@
     </section>
 
     <!-- FAQs -->
-    <section class="faqs">
+    <section id="faqs" class="faqs">
         <div class="section-header">
             <h2>Frequently Asked Questions</h2>
             <p>Find answers to common questions about our internship program</p>

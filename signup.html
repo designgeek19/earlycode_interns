@@ -37,6 +37,98 @@
             z-index: -1;
         }
 
+        /* Burger Menu Styles */
+        .burger-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .burger-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .burger-btn:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .burger-btn span {
+            width: 20px;
+            height: 2px;
+            background: #1a76d2;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        .menu-items {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .burger-menu.active .menu-items {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-items a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-items a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-items a:hover {
+            background: #f8f9fa;
+            color: #1a76d2;
+        }
+
+        .menu-items a i {
+            margin-right: 10px;
+            width: 16px;
+            text-align: center;
+        }
+
         .container {
             display: flex;
             width: 100%;
@@ -211,7 +303,6 @@
         .signup-header {
             text-align: center;
             margin-bottom: 25px;
-            /* padding-top: 100px; */
         }
 
         .signup-header h2 {
@@ -407,6 +498,7 @@
             justify-content: center;
             gap: 15px;
             margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         .social-btn {
@@ -589,6 +681,21 @@
     </style>
 </head>
 <body>
+    <!-- Burger Menu -->
+    <div class="burger-menu">
+        <div class="burger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-items">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="index.html#internship-details"><i class="fas fa-info-circle"></i> Internship</a>
+            <a href="index.html#requirements"><i class="fas fa-graduation-cap"></i> Requirements</a>
+            <a href="index.html#faqs"><i class="fas fa-envelope"></i> FAQs</a>
+        </div>
+    </div>
+
     <div class="container">
         <div class="brand-section">
             <div class="logo">
@@ -625,7 +732,7 @@
         </div>
         <div class="signup-section">
             <div class="signup-header">
-                <h2>Create Account</h2>
+                <h2>Create an Account</h2>
                 <p>Sign up below to manage your internship journey</p>
             </div>
             
@@ -791,6 +898,21 @@
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('focused');
             });
+        });
+
+        // Burger menu functionality
+        const burgerMenu = document.querySelector('.burger-menu');
+        const burgerBtn = document.querySelector('.burger-btn');
+        
+        burgerBtn.addEventListener('click', function() {
+            burgerMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!burgerMenu.contains(event.target) && burgerMenu.classList.contains('active')) {
+                burgerMenu.classList.remove('active');
+            }
         });
     </script>
 </body>
