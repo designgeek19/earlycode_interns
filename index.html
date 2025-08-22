@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Code - Intern Management Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #333;
+            line-height: 1.6;
+            background: #f9fbfd;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1a76d2 0%, #0f4c89 100%);
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* spacing between image and text */
+        }
+
+        .logo-image img {
+            height: 40px; /* adjust size to fit navbar */
+            width: auto;
+            display: block;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .logo-text h1 span {
+            color: #FFD43B; /* accent color for "code" */
+        }
+
+        .logo-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #ffffff; /* lighter shade for subtitle */
+            padding-top: -3;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links .login-btn {
+            background: #F6BC02;
+            color: #0f4c89;
+            font-weight: 600;
+            padding: 8px 20px;
+        }
+
+        .nav-links .login-btn:hover {
+            background: #e5ac01;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 118, 210, 0.85), rgba(15, 76, 137, 0.9)), url(images/interns\ \(2\).jpg) center/cover no-repeat;
+            color: white;
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, #F6BC02, #FFD43B);
+            color: #0f4c89;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 40px 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            color: #0f4c89;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: #F6BC02;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+
+        /* Internship Details */
+        .internship-details {
+            background: white;
+        }
+
+        .details-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .detail-card {
+            background: #f9fbfd;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border-top: 4px solid #1a76d2;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-card h3 {
+            color: #0f4c89;
+            margin-bottom: 15px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-card h3 i {
+            margin-right: 10px;
+            color: #F6BC02;
+        }
+
+        .detail-card ul {
+            list-style-type: none;
+        }
+
+        .detail-card li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .detail-card li::before {
+            content: '•';
+            color: #1a76d2;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .requirements {
+            padding: 60px 20px;
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .requirement-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .requirement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .requirement-card h3 {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .requirement-card h3 i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .requirement-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .requirement-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f1f1;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .requirement-card li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .requirement-card li:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 768px) {
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .requirement-card {
+                padding: 20px;
+            }
+        }
+
+        /* Articles */
+        .articles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .article1-img {
+            height: 200px;
+            background: linear-gradient(to bottom right, rgba(36, 153, 221, 0.4), rgba(15, 76, 137, 0.9)), url(https://images.unsplash.com/photo-1639472628910-ef02c5404b9c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat;
+            background-size:cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .article2-img {
+            height: 200px;
+            background: linear-gradient(to bottom right, rgba(36, 153, 221, 0.4), rgba(15, 76, 137, 0.9)), url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat;
+            background-size:cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .article3-img {
+            height: 200px;
+            background: linear-gradient(to bottom right, rgba(36, 153, 221, 0.4), rgba(15, 76, 137, 0.9)), url(https://images.unsplash.com/photo-1740042501963-7d064df65a3f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat;
+            background-size:cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .article-content {
+            padding: 25px;
+        }
+
+        .article-content h3 {
+            color: #0f4c89;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .article-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: #1a76d2;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* FAQs */
+        .faqs {
+            background: linear-gradient(rgba(26, 118, 210, 0.6), rgba(15, 76, 137, 0.6)), url(images/workspace.jpg) center/cover no-repeat;
+        }
+
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faqs h2 {
+            color: white;
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .faqs p {
+            color: white;
+            text-align: center;
+            /* padding: 20px 0; */
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f4c89;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            transition: all 0.3s;
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #555;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px 25px;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0f4c89 0%, #1a76d2 100%);
+            color: white;
+            padding: 40px 10px 10px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #F6BC02;
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            list-style-type: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #F6BC02;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+            
+            .hero {
+                padding: 80px 20px;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #0f4c89;
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            
+            .section-header h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            
+            .section-header h2 {
+                font-size: 24px;
+            }
+            
+            .detail-card, .requirement-card, .article-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+        <div class="logo-image">
+            <img src="images/earlycode.png" alt="earlycode logo">
+        </div>
+        <div class="logo-text">
+            <h1>early<span>code</span></h1>
+            <p>Internship Portal</p>
+        </div>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Programs</a>
+            <a href="#">Contact</a>
+            <a href="login.html" class="login-btn">Login / Signup</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Launch Your Tech Career with Early Code</h2>
+            <p>Gain real-world experience, develop in-demand skills, and jumpstart your career in technology with our comprehensive internship program.</p>
+            <a href="signup.html" class="cta-button">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Internship Details -->
+    <section class="internship-details">
+        <div class="section-header">
+            <h2>Internship Program</h2>
+            <p>Our program is designed to provide IT students with hands-on experience and professional development</p>
+        </div>
+        
+        <div class="details-container">
+            <div class="detail-card">
+                <h3><i class="fas fa-clock"></i> Program Duration</h3>
+                <ul>
+                    <li>3-6 month flexible program</li>
+                    <li>Full-time and part-time options available</li>
+                    <li>Start dates throughout the year</li>
+                    <li>Possibility of job placement based on performance</li>
+                </ul>
+            </div>
+            
+            <div class="detail-card">
+                <h3><i class="fas fa-gift"></i> Benefits</h3>
+                <ul>
+                    <li>Hands-on experience with real projects</li>
+                    <li>Mentorship from industry professionals</li>
+                    <li>Networking opportunities</li>
+                    <li>Certificate of completion</li>
+                    <li>Potential job offers for top performers</li>
+                </ul>
+            </div>
+            
+            <div class="detail-card">
+                <h3><i class="fas fa-cogs"></i> Process</h3>
+                <ul>
+                    <li>Application and screening</li>
+                    <li>Technical assessment</li>
+                    <li>Interview with our team</li>
+                    <li>Onboarding and orientation</li>
+                    <li>Regular progress evaluations</li>
+                    <li>Final project presentation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<!-- Requirements -->
+<section class="requirements">
+    <div class="section-header">
+        <h2>Requirements</h2>
+        <p>What you need to join our internship program</p>
+    </div>
+    
+    <div class="requirements-grid">
+        <div class="requirement-card">
+            <h3><i class="fas fa-user-graduate"></i> Eligibility Criteria</h3>
+            <ul>
+                <li>Currently enrolled in an IT-related degree program</li>
+                <li>Basic knowledge of programming concepts is not compulsory</li>
+                <li>Strong problem-solving skills</li>
+                <li>Good communication abilities</li>
+                <li>Ability to work in a team environment</li>
+                <li>Passion for technology and learning</li>
+            </ul>
+        </div>
+        
+        <div class="requirement-card">
+            <h3><i class="fas fa-file-alt"></i> Documents Needed</h3>
+            <ul>
+                <li>Updated resume/CV</li>
+                <li>Enrollment into one of the main IT programs in earlycode</li>
+                <li>SIWES application letter from educational institution</li>
+                <li>Portfolio of projects (if available)</li>
+                <li>Government-issued ID</li>
+                <li>Proof of enrollment</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Articles/Resources -->
+    <section class="articles">
+        <div class="section-header">
+            <h2>Resources & Articles</h2>
+            <p>Helpful resources to prepare for your internship journey</p>
+        </div>
+        
+        <div class="articles-container">
+            <div class="article-card">
+                <div class="article1-img">How to Prepare for a Tech Internship</div>
+                <div class="article-content">
+                    <h3>Preparing for Your Tech Internship</h3>
+                    <p>Learn the essential steps to get ready for your internship, from technical preparation to professional etiquette.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article2-img">Building Your Portfolio</div>
+                <div class="article-content">
+                    <h3>Creating a Standout Portfolio</h3>
+                    <p>Discover how to showcase your projects and skills effectively to impress potential employers.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="article-card">
+                <div class="article3-img">Maximizing Your Internship</div>
+                <div class="article-content">
+                    <h3>Getting the Most from Your Internship</h3>
+                    <p>Strategies to turn your internship into a full-time job offer and valuable career experience.</p>
+                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="faqs">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our internship program</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">What is the duration of the internship program? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    Our internship program typically runs for 3-6 months, with flexible start dates throughout the year. We offer both full-time and part-time options to accommodate academic schedules.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is this a paid internship? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    This is not a paid internship. However, we provide our interns with hands-on training, mentorship, and career development support to prepare them for job opportunities.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What technical skills do I need to apply? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    You don’t need any prior technical skills to apply. Our internship program is designed to accommodate beginners as well as those with some experience. We provide the training and guidance you need to become proficient in your chosen area during the program.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I apply if I'm a beginner with little experience? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    Absolutely! We have positions suitable for beginners. We're primarily looking for enthusiasm, willingness to learn, and problem-solving aptitude rather than extensive experience.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What kind of projects will I work on? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    You'll work on real projects that impact businesses or clients. This could include web development, mobile app development, data analysis, UX/UI design, or other IT-related tasks depending on your role.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Will I receive mentorship during the internship? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    Yes, each intern is paired with an experienced mentor who provides guidance, feedback, and support throughout the program.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are remote internships available? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    We do not offer remote internships. All our internship programs are held on-site to ensure effective hands-on training, teamwork, and mentorship.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What is the application process? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    Our process typically includes: 1) SIWES application and acceptance, 2) Course registration and enrollment, 3) Onboarding with mentors, and 4) Training and mentorship for successful candidates.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is there a possibility of full-time employment after the internship? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">
+                    There is no guarantee of full-time employment after the internship. However, top-performing interns may be considered for job openings based on their performance and the company's needs.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section" style="background: linear-gradient(135deg, #1a76d2 0%, #0f4c89 100%); padding: 80px 20px; text-align: center; color: white;">
+        <h2 style="font-size: 36px; margin-bottom: 20px;">Ready to Launch Your Tech Career?</h2>
+        <p style="font-size: 20px; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">Join our internship program and gain the skills, experience, and connections you need to succeed in the tech industry.</p>
+        <a href="signup.html" class="cta-button" style="background: linear-gradient(to right, #F6BC02, #FFD43B); color: #0f4c89;">Apply Now</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Early Code</h3>
+                <p>Early Code provides cutting-edge internship programs for IT students, connecting talent with opportunity in the tech industry.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Programs</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Innovation City</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@earlycode.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Early Code. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Simple animation for elements when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.detail-card, .requirement-card, .article-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
