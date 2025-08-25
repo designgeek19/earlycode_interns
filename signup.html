@@ -353,35 +353,6 @@
             outline: none;
         }
 
-        /* .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .remember {
-            display: flex;
-            align-items: center;
-        }
-
-        .remember input {
-            margin-right: 8px;
-            accent-color: #1a76d2;
-        }
-
-        .forgot-password {
-            color: #1a76d2;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .forgot-password:hover {
-            color: #0a2240;
-            text-decoration: underline;
-        } */
-
         .login-button {
             width: 100%;
             padding: 14px;
@@ -580,6 +551,7 @@
             <a href="index.html#internship-details"><i class="fas fa-info-circle"></i> Internship</a>
             <a href="index.html#requirements"><i class="fas fa-graduation-cap"></i> Requirements</a>
             <a href="index.html#faqs"><i class="fas fa-envelope"></i> FAQs</a>
+            <a href="completeregistration.html"><i class="fas fa-user"></i> Complete Your Registration</a>
         </div>
     </div>
 
@@ -622,30 +594,14 @@
                 <h2>Create an Account</h2>
                 <p>Sign up to get started with your internship journey</p>
             </div>
-            <form>
+            <form id="signup-form">
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <div class="input-with-icon">
                         <i class="fas fa-envelope"></i>
                         <input type="email" id="email" placeholder="example@email.com" required>
                     </div>
-
-                <!-- PASSWORD SECTION -->
-                <!-- </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" placeholder="Enter your password" required>
-                    </div>
                 </div>
-                <div class="remember-forgot">
-                    <div class="remember">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
-                </div> -->
 
                 <button type="submit" class="login-button">Sign up</button>
             </form>
@@ -664,67 +620,53 @@
     </div>
 
     <script>
-        // Simple form validation and animation
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const loginButton = document.querySelector('.login-button');
+            // Burger menu functionality
+            const burgerMenu = document.querySelector('.burger-menu');
+            const burgerBtn = document.querySelector('.burger-btn');
             
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                if(email && password) {
-                    // Simulate loading
-                    loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
-                    loginButton.disabled = true;
-                    
-                    // Simulate API call
-                    setTimeout(function() {
-                        alert('Login successful! Redirecting to dashboard...');
-                        loginButton.innerHTML = 'Sign In';
-                        loginButton.disabled = false;
-                    }, 1500);
+            burgerBtn.addEventListener('click', function() {
+                burgerMenu.classList.toggle('active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!burgerMenu.contains(event.target) && burgerMenu.classList.contains('active')) {
+                    burgerMenu.classList.remove('active');
                 }
             });
 
-// Form submission for signup
-document.querySelector('form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    
-    // Validate email
-    if (!email || !isValidEmail(email)) {
-        alert('Please enter a valid email address');
-        return;
-    }
-    
-    // Simulate signup process
-    const signupButton = document.querySelector('.login-button');
-    signupButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    signupButton.disabled = true;
-    
-    // Simulate API call
-    setTimeout(function() {
-        alert('A verification link has been sent to your email. Please check your inbox and click on the link to complete your registration.');
-        signupButton.innerHTML = 'Sign up';
-        signupButton.disabled = false;
-    }, 2000);
-});
+            // Form submission for signup
+            document.getElementById('signup-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                
+                // Validate email
+                if (!email || !isValidEmail(email)) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+                
+                // Simulate signup process
+                const signupButton = document.querySelector('.login-button');
+                const originalText = signupButton.innerHTML;
+                signupButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                signupButton.disabled = true;
+                
+                // Simulate API call
+                setTimeout(function() {
+                    alert('A verification link has been sent to your email. Please check your inbox and click on the link to complete your registration.');
+                    signupButton.innerHTML = originalText;
+                    signupButton.disabled = false;
+                }, 2000);
+            });
 
-// Email validation function
-function isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
-// Email validation function
-function isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
+            // Email validation function
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
             
             // Add focus effects to inputs
             const inputs = document.querySelectorAll('input');
@@ -737,20 +679,6 @@ function isValidEmail(email) {
                     this.parentElement.classList.remove('focused');
                 });
             });
-
-        // Burger menu functionality
-        const burgerMenu = document.querySelector('.burger-menu');
-        const burgerBtn = document.querySelector('.burger-btn');
-        
-        burgerBtn.addEventListener('click', function() {
-            burgerMenu.classList.toggle('active');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!burgerMenu.contains(event.target) && burgerMenu.classList.contains('active')) {
-                burgerMenu.classList.remove('active');
-            }
         });
     </script>
 </body>
