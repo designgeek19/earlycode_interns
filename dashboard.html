@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Code - Intern Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f9fbfd;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            background: #FFFFFF;
+            color: white;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-image img {
+            height: 34px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            margin-bottom: -3px;
+            font-weight: bold;
+            color: #1a76d2;
+        }
+
+        .logo-text h1 span {
+            color: #1a76d2;
+        }
+
+        .logo-text p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #000000;
+            margin-top: -3;
+            font-weight: bold;
+            opacity: 0.8;
+            text-transform: unset;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: black;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links .logout-btn {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 8px 20px;
+        }
+
+        .nav-links .logout-btn:hover {
+            background: linear-gradient(to right, #c0392b, #e74c3c);
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #1a76d2 0%, #0f4c89 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge i {
+            color: #2ecc71;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: #0f4c89;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            color: #666;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .info-item i {
+            color: #1a76d2;
+            margin-right: 15px;
+            margin-top: 4px;
+            font-size: 18px;
+            min-width: 20px;
+        }
+
+        .info-item div {
+            flex: 1;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        /* Downloads Section */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .download-item:hover {
+            background: #f0f7ff;
+            transform: translateY(-3px);
+        }
+
+        .download-icon {
+            background: #e8f4ff;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #1a76d2;
+            font-size: 20px;
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-title {
+            font-weight: 600;
+            color: #0f4c89;
+            margin-bottom: 5px;
+        }
+
+        .download-meta {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .download-btn {
+            background: #1a76d2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0f4c89;
+        }
+
+        /* Announcements Section */
+        .announcements-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .announcement-item {
+            padding: 20px;
+            border-left: 4px solid #F6BC02;
+            background: #fff9e6;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .announcement-title {
+            font-weight: 600;
+            color: #0f4c89;
+        }
+
+        .announcement-date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .announcement-content {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .announcement-badge {
+            background: #F6BC02;
+            color: #333;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #1a76d2, #0f4c89);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #0f4c89, #1a76d2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(26, 118, 210, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0f4c89 0%, #1a76d2 100%);
+            color: white;
+            padding: 40px 10px 10px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #F6BC02;
+        }
+
+        .footer-column p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            list-style-type: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #F6BC02;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            
+            .welcome-banner {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 6px 10px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 10px 15px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.6rem;
+            }
+            
+            .logo-image img {
+                height: 28px;
+            }
+            
+            .welcome-text h2 {
+                font-size: 24px;
+            }
+            
+            .card-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-image">
+                <img src="images/earlycode.png" alt="earlycode logo">
+            </div>
+            <div class="logo-text">
+                <h1>early<span>code</span></h1>
+                <p>Internship Portal</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="login.html" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h2>Welcome, Moses Kelechi Okafor!</h2>
+                <p>Your Early Code internship journey begins here. Check your dashboard for updates and resources.</p>
+            </div>
+            <div class="status-badge">
+                <i class="fas fa-check-circle"></i>
+                <span>Application Accepted</span>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Personal Details Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user"></i> Personal Details</h3>
+                </div>
+                <div class="card-content">
+                    <div class="info-item">
+                        <i class="fas fa-user-circle"></i>
+                        <div>
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value">Moses Kelechi Okafor</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <div class="info-label">Email</div>
+                            <div class="info-value">moseskels12@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">08133434453</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <div class="info-label">Address</div>
+                            <div class="info-value">Kubwa, Abuja, Nigeria</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internship Details Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-briefcase"></i> SIWES Details</h3>
+                </div>
+                <div class="card-content">
+                    <div class="info-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <div class="info-label">Duration</div>
+                            <div class="info-value">6 Months (October 6, 2025 - April 6, 2026)</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div class="info-label">Status</div>
+                            <div class="info-value">Active</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-building"></i>
+                        <div>
+                            <div class="info-label">Campus</div>
+                            <div class="info-value">Kubwa Campus</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-id-card"></i>
+                        <div>
+                            <div class="info-label">Supervisor</div>
+                            <div class="info-value">Mr. Tochukwu Ozo-Osiedo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program Details Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-laptop-code"></i> Program Details</h3>
+                </div>
+                <div class="card-content">
+                    <div class="info-item">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <div class="info-label">Program</div>
+                            <div class="info-value">Web Development with React & Next.js</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div class="info-label">Duration</div>
+                            <div class="info-value">12 Weeks</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <div>
+                            <div class="info-label">Instructor</div>
+                            <div class="info-value">Mr. Tochukwu Ozo-Osiedo</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <div class="info-label">Education</div>
+                            <div class="info-value">University of Abuja, Computer Science (300 Level)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Downloads Section -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-download"></i> Resources & Documents</h3>
+            </div>
+            <div class="card-content">
+                <div class="downloads-grid">
+                    <div class="download-item">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="download-info">
+                            <div class="download-title">Acceptance Letter</div>
+                            <div class="download-meta">PDF • 250 KB</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument('acceptance-letter')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="download-info">
+                            <div class="download-title">Code of Conduct</div>
+                            <div class="download-meta">PDF • 180 KB</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument('code-of-conduct')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="download-info">
+                            <div class="download-title">Program Schedule</div>
+                            <div class="download-meta">PDF • 320 KB</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument('program-schedule')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="download-info">
+                            <div class="download-title">Learning Materials</div>
+                            <div class="download-meta">ZIP • 15.2 MB</div>
+                        </div>
+                        <button class="download-btn" onclick="downloadDocument('learning-materials')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Announcements Section -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-bullhorn"></i> Announcements</h3>
+            </div>
+            <div class="card-content">
+                <div class="announcements-list">
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <div class="announcement-title">
+                                Orientation Session Schedule
+                                <span class="announcement-badge">NEW</span>
+                            </div>
+                            <div class="announcement-date">Oct 10, 2025</div>
+                        </div>
+                        <div class="announcement-content">
+                            The orientation session for all new interns will hold on Monday, October 13th, 2025 at the Kubwa Campus Auditorium by 10:00 AM. Attendance is mandatory for all interns.
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <div class="announcement-title">Project Submission Guidelines</div>
+                            <div class="announcement-date">Oct 8, 2025</div>
+                        </div>
+                        <div class="announcement-content">
+                            Please note that all project submissions must follow the new guidelines. Check the learning portal for detailed instructions on formatting and submission deadlines.
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <div class="announcement-title">Holiday Notice</div>
+                            <div class="announcement-date">Oct 5, 2025</div>
+                        </div>
+                        <div class="announcement-content">
+                            Please be informed that the internship center will be closed on October 15th, 2025 for a public holiday. All activities will resume on October 16th.
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <div class="announcement-title">Mentor Matching Complete</div>
+                            <div class="announcement-date">Oct 3, 2025</div>
+                        </div>
+                        <div class="announcement-content">
+                            The mentor matching process has been completed. Check your dashboard to see your assigned mentor and schedule your first meeting.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Early Code</h3>
+                <p>Early Code provides cutting-edge internship programs for IT students, connecting talent with opportunity in the tech industry.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#programs">Programs</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="index.html#privacy">Privacy Policy</a></li>
+                    <li><a href="index.html#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Innovation City</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@earlycode.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Early Code. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to simulate document downloads
+        function downloadDocument(type) {
+            let fileName = '';
+            let fileSize = '';
+            
+            switch(type) {
+                case 'acceptance-letter':
+                    fileName = 'EarlyCode_Acceptance_Letter.pdf';
+                    fileSize = '250KB';
+                    break;
+                case 'code-of-conduct':
+                    fileName = 'EarlyCode_Code_of_Conduct.pdf';
+                    fileSize = '180KB';
+                    break;
+                case 'program-schedule':
+                    fileName = 'EarlyCode_Program_Schedule.pdf';
+                    fileSize = '320KB';
+                    break;
+                case 'learning-materials':
+                    fileName = 'EarlyCode_Learning_Materials.zip';
+                    fileSize = '15.2MB';
+                    break;
+            }
+            
+            // Create a simple download simulation
+            const link = document.createElement('a');
+            link.href = 'data:application/octet-stream;base64,JVBERi0xLjcKJeLjz9MKMyAwIG9iago8PC9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL1Jlc291cmNlcyAyIDAgUgovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDwvTGVuZ3RoIDU2Pj5zdHJlYW0KIAogICAgICAgIAolJUVPRgo=';
+            link.download = fileName;
+            link.click();
+            
+            // Show confirmation
+            alert(`Download started: ${fileName} (${fileSize})`);
+        }
+        
+        // Function to mark announcements as read
+        document.addEventListener('DOMContentLoaded', function() {
+            const announcements = document.querySelectorAll('.announcement-badge');
+            
+            // Simulate marking announcements as read after 5 seconds
+            setTimeout(() => {
+                announcements.forEach(badge => {
+                    badge.style.opacity = '0.7';
+                    badge.textContent = 'SEEN';
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
