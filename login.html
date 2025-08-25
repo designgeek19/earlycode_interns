@@ -353,7 +353,7 @@
             outline: none;
         }
 
-        .remember-forgot {
+        /* .remember-forgot {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -380,11 +380,12 @@
         .forgot-password:hover {
             color: #0a2240;
             text-decoration: underline;
-        }
+        } */
 
         .login-button {
             width: 100%;
             padding: 14px;
+            margin-top: 20px;
             background: linear-gradient(to right, #F6BC02, #2499dd);
             border: none;
             border-radius: 8px;
@@ -626,9 +627,11 @@
                     <label for="email">Email Address</label>
                     <div class="input-with-icon">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" placeholder="Enter your email" required>
+                        <input type="email" id="email" placeholder="example@email.com" required>
                     </div>
-                </div>
+
+                <!-- PASSWORD SECTION -->
+                <!-- </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-with-icon">
@@ -642,8 +645,9 @@
                         <label for="remember">Remember me</label>
                     </div>
                     <a href="#" class="forgot-password">Forgot Password?</a>
-                </div>
-                <button type="submit" class="login-button">Sign In</button>
+                </div> -->
+
+                <button type="submit" class="login-button">Login</button>
             </form>
             <div class="divider">
                 <span>Or continue with</span>
@@ -684,6 +688,37 @@
                     }, 1500);
                 }
             });
+
+            // Form submission
+            document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            
+            // Validate email
+            if (!email || !isValidEmail(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Simulate login process
+            const loginButton = document.querySelector('.login-button');
+            loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            loginButton.disabled = true;
+            
+            // Simulate API call
+            setTimeout(function() {
+                alert('A login link has been sent to your email. Please check your inbox and click on the link to complete your login.');
+                loginButton.innerHTML = 'Login';
+                loginButton.disabled = false;
+            }, 2000);
+        });
+
+        // Email validation function
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
             
             // Add focus effects to inputs
             const inputs = document.querySelectorAll('input');

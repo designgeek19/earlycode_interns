@@ -133,7 +133,7 @@
             display: flex;
             width: 100%;
             max-width: 1000px;
-            height: 100%;
+            height: auto;
             min-height: 600px;
             background: white;
             border-radius: 15px;
@@ -289,35 +289,33 @@
             color: #f5f7f9;
         }
 
-        .signup-section {
+        .login-section {
             flex: 1;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             background: #fff;
-            overflow-y: auto;
-            max-height: 800px;
         }
 
-        .signup-header {
+        .login-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        .signup-header h2 {
+        .login-header h2 {
             font-size: 28px;
             color: #0a2240;
             margin-bottom: 10px;
         }
 
-        .signup-header p {
+        .login-header p {
             color: #666;
             font-size: 15px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             position: relative;
         }
 
@@ -338,66 +336,56 @@
             top: 50%;
             transform: translateY(-50%);
             color: #1a76d2;
-            z-index: 2;
         }
 
-        .input-with-icon input, .input-with-icon select {
+        .input-with-icon input {
             width: 100%;
             padding: 14px 15px 14px 45px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 15px;
             transition: all 0.3s;
-            position: relative;
-            z-index: 1;
         }
 
-        .input-with-icon input:focus, .input-with-icon select:focus {
+        .input-with-icon input:focus {
             border-color: #1a76d2;
             box-shadow: 0 0 0 3px rgba(26, 118, 210, 0.2);
             outline: none;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .terms {
+        /* .remember-forgot {
             display: flex;
-            align-items: flex-start;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
             font-size: 14px;
         }
 
-        .terms input {
-            margin-right: 10px;
-            margin-top: 3px;
+        .remember {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember input {
+            margin-right: 8px;
             accent-color: #1a76d2;
         }
 
-        .terms label {
-            color: #555;
-            line-height: 1.4;
-        }
-
-        .terms a {
+        .forgot-password {
             color: #1a76d2;
             text-decoration: none;
+            transition: color 0.3s;
         }
 
-        .terms a:hover {
+        .forgot-password:hover {
+            color: #0a2240;
             text-decoration: underline;
-        }
+        } */
 
-        .signup-button {
+        .login-button {
             width: 100%;
             padding: 14px;
+            margin-top: 20px;
             background: linear-gradient(to right, #F6BC02, #2499dd);
             border: none;
             border-radius: 8px;
@@ -407,71 +395,17 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 10px rgba(26, 118, 210, 0.3);
-            margin-bottom: 15px;
         }
 
-        .signup-button:hover {
+        .login-button:hover {
             background: linear-gradient(to right, #2499dd, #F6BC02);
             box-shadow: 0 6px 15px rgba(11, 63, 114, 0.4);
             transform: translateY(-4px);
         }
 
-        .progress-bar {
-            display: flex;
-            margin-bottom: 25px;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .progress-bar::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: #f0f0f0;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 33%;
-            height: 4px;
-            background: #1a76d2;
-            transform: translateY(-50%);
-            transition: width 0.5s ease;
-            z-index: 2;
-        }
-
-        .step {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: white;
-            border: 3px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #999;
-            position: relative;
-            z-index: 3;
-        }
-
-        .step.active {
-            border-color: #1a76d2;
-            background: #1a76d2;
-            color: white;
-        }
-
         .divider {
             text-align: center;
-            margin: 20px 0;
+            margin: 25px 0;
             position: relative;
         }
 
@@ -493,12 +427,11 @@
             z-index: 1;
         }
 
-        .social-signup {
+        .social-login {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 20px;
-            margin-top: 10px;
+            margin-bottom: 25px;
         }
 
         .social-btn {
@@ -535,76 +468,30 @@
             font-weight: 600;
         }
 
-        .login-link {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 15px;
+        .social-btn.github:hover {
+            color: #333;
+            border-color: #333;
         }
 
-        .login-link a {
+        .social-btn.linkedin:hover {
+            color: #0077B5;
+            border-color: #0077B5;
+        }
+
+        .signup-link {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .signup-link a {
             color: #1a76d2;
             text-decoration: none;
             font-weight: 600;
         }
 
-        .login-link a:hover {
+        .signup-link a:hover {
             text-decoration: underline;
-        }
-
-        .form-step {
-            display: none;
-        }
-
-        .form-step.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            background: #f0f0f0;
-            border: none;
-            border-radius: 8px;
-            color: #555;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-btn.prev {
-            background: #1a76d2;
-            color: white;
-            margin-right: 10px;
-            height: 50px;
-        }
-
-        .nav-btn.prev:hover {
-            background: #0f4c89;
-        }
-
-        .nav-btn:hover {
-            background: #e0e0e0;
-        }
-
-        .nav-btn.next {
-            background: #1a76d2;
-            color: white;
-        }
-
-        .nav-btn.next:hover {
-            background: #0f4c89;
         }
 
         @media (max-width: 900px) {
@@ -618,10 +505,9 @@
                 order: 2;
             }
             
-            .signup-section {
+            .login-section {
                 padding: 30px;
                 order: 1;
-                max-height: none;
             }
             
             .logo h1 {
@@ -648,7 +534,7 @@
         }
 
         @media (max-width: 480px) {
-            .brand-section, .signup-section {
+            .brand-section, .login-section {
                 padding: 25px 15px;
             }
             
@@ -665,17 +551,18 @@
                 font-size: 20px;
             }
             
-            .social-btn span {
-                font-size: 14px;
-            }
-            
-            .navigation-buttons {
+            .remember-forgot {
                 flex-direction: column;
+                align-items: flex-start;
                 gap: 10px;
             }
             
-            .nav-btn {
-                width: 100%;
+            .forgot-password {
+                margin-left: 28px;
+            }
+            
+            .social-btn span {
+                font-size: 14px;
             }
         }
     </style>
@@ -709,8 +596,8 @@
                 </div>
             </div>
             <div class="brand-text">
-                <h2>Begin Your Journey With Us</h2>
-                <p>Join our platform to streamline your internship experience with advanced tracking, task management, and performance analytics.</p>
+                <h2>Empowering Future Tech Pioneers</h2>
+                <p>Take control of your internship program with our smart platform—designed for seamless organization and real-time growth tracking.</p>
             </div>
             <div class="brand-features">
                 <div class="feature">
@@ -730,175 +617,126 @@
                 <p class="watermark-text">© 2025 Early Code. All rights reserved.</p>
             </div>
         </div>
-        <div class="signup-section">
-            <div class="signup-header">
+        <div class="login-section">
+            <div class="login-header">
                 <h2>Create an Account</h2>
-                <p>Sign up below to manage your internship journey</p>
+                <p>Sign up to get started with your internship journey</p>
             </div>
-            
-            <div class="progress-bar">
-                <div class="step active">1</div>
-                <div class="step">2</div>
-            </div>
-            
-            <form id="signup-form">
-                <!-- Step 1: Personal Info -->
-                <div class="form-step active" id="step1">
-                    <div class="form-group">
-                        <label for="fullname">Full Name</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="fullname" placeholder="Enter your full name" required>
-                        </div>
+            <form>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="example@email.com" required>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" placeholder="Enter your email" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-phone"></i>
-                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
-                        </div>
-                    </div>
-                    <div class="navigation-buttons">
-                        <div></div> <!-- Empty div for spacing -->
-                        <button type="button" class="nav-btn next" onclick="showStep(2)">Next</button>
+
+                <!-- PASSWORD SECTION -->
+                <!-- </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Enter your password" required>
                     </div>
                 </div>
-                
-                <!-- Step 2: Account Details -->
-                <div class="form-step" id="step2">
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="password" placeholder="Create a password" required>
-                            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
-                        </div>
+                <div class="remember-forgot">
+                    <div class="remember">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
                     </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="userType">Account Type</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user-tag"></i>
-                            <select id="userType" required>
-                                <option value="" disabled selected>Select account type</option>
-                                <option value="intern">Intern</option>
-                                <option value="admin">Administrator</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="navigation-buttons">
-                        <button type="button" class="nav-btn prev" onclick="showStep(1)">Previous</button>
-                        <button type="submit" class="signup-button">Create Account</button>
-                    </div>
-                </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div> -->
+
+                <button type="submit" class="login-button">Sign up</button>
             </form>
-            
             <div class="divider">
-                <span>Or sign up with</span>
+                <span>Or continue with</span>
             </div>
-            <div class="social-signup">
+            <div class="social-login">
                 <div class="social-btn google">
-                    <i class="fab fa-google"></i> <span>Google</span>
+                    <i class="fab fa-google" ></i> <span>Google</span>
                 </div>
             </div>
-            <div class="login-link">
-                Already have an account? <a href="login.html">Sign in</a>
+            <div class="signup-link">
+                Already have an account? <a href="login.html">Log in</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Multi-step form functionality
-        let currentStep = 1;
-        const totalSteps = 2;
-        
-        function showStep(step) {
-            // Hide all steps
-            document.querySelectorAll('.form-step').forEach(formStep => {
-                formStep.classList.remove('active');
-            });
+        // Simple form validation and animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const loginButton = document.querySelector('.login-button');
             
-            // Show the selected step
-            document.getElementById('step' + step).classList.add('active');
-            
-            // Update progress bar
-            document.querySelectorAll('.step').forEach((el, index) => {
-                if (index < step) {
-                    el.classList.add('active');
-                } else {
-                    el.classList.remove('active');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                if(email && password) {
+                    // Simulate loading
+                    loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+                    loginButton.disabled = true;
+                    
+                    // Simulate API call
+                    setTimeout(function() {
+                        alert('Login successful! Redirecting to dashboard...');
+                        loginButton.innerHTML = 'Sign In';
+                        loginButton.disabled = false;
+                    }, 1500);
                 }
             });
+
+// Form submission for signup
+document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    
+    // Validate email
+    if (!email || !isValidEmail(email)) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // Simulate signup process
+    const signupButton = document.querySelector('.login-button');
+    signupButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    signupButton.disabled = true;
+    
+    // Simulate API call
+    setTimeout(function() {
+        alert('A verification link has been sent to your email. Please check your inbox and click on the link to complete your registration.');
+        signupButton.innerHTML = 'Sign up';
+        signupButton.disabled = false;
+    }, 2000);
+});
+
+// Email validation function
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+// Email validation function
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
             
-            // Update progress bar line
-            document.querySelector('.progress-bar::after').style.width = `${(step-1)/(totalSteps-1) * 100}%`;
-            
-            currentStep = step;
-        }
-        
-        // Password visibility toggle
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            
-            // Toggle eye icon
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-        
-        // Form validation and submission
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Simple validation
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-            
-            // Simulate registration process
-            const signupButton = document.querySelector('.signup-button');
-            signupButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
-            signupButton.disabled = true;
-            
-            // Simulate API call
-            setTimeout(function() {
-                alert('Account created successfully! Redirecting to dashboard...');
-                signupButton.innerHTML = 'Create Account';
-                signupButton.disabled = false;
-                // In a real scenario, you would redirect to the dashboard
-                // window.location.href = 'dashboard.html';
-            }, 2000);
-        });
-        
-        // Add focus effects to inputs
-        const inputs = document.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
+            // Add focus effects to inputs
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
             });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('focused');
-            });
-        });
 
         // Burger menu functionality
         const burgerMenu = document.querySelector('.burger-menu');

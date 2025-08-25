@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Code - Complete Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a76d2 0%, #0f4c89 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(images/EC_BG.jpg) center/cover no-repeat;
+            opacity: 0.08;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #FFFFFF;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-image img {
+            height: 34px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: bold;
+            color: #1a76d2;
+        }
+
+        .logo-text h1 span {
+            color: #1a76d2;
+        }
+
+        .logo-text p {
+            margin: 0;
+            font-size: 0.7rem;
+            color: #000000;
+            padding-top: -3;
+            font-weight: bolder;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .burger-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .burger-btn:hover {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .burger-btn span {
+            width: 20px;
+            height: 2px;
+            background: #1a76d2;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active .burger-btn span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        .menu-items {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .burger-menu.active .menu-items {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-items a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-items a:last-child {
+            border-bottom: none;
+        }
+
+        .menu-items a:hover {
+            background: #f8f9fa;
+            color: #1a76d2;
+        }
+
+        .menu-items a i {
+            margin-right: 10px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            margin-top: 70px;
+        }
+
+        .registration-section {
+            flex: 1.5;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .registration-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .registration-header h2 {
+            font-size: 32px;
+            color: #0a2240;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .registration-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: #F6BC02;
+            border-radius: 2px;
+        }
+
+        .registration-header p {
+            color: #666;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .progress-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #f0f0f0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #1a76d2;
+            transform: translateY(-50%);
+            transition: width 0.5s ease;
+            z-index: 2;
+        }
+
+        .step {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #999;
+            position: relative;
+            z-index: 3;
+        }
+
+        .step.active {
+            border-color: #1a76d2;
+            background: #1a76d2;
+            color: white;
+        }
+
+        .step-label {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: #1a76d2;
+            font-weight: 600;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .form-group .required::after {
+            content: '*';
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1a76d2;
+            z-index: 2;
+        }
+
+        .input-with-icon input, 
+        .input-with-icon select, 
+        .input-with-icon textarea {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-with-icon input:focus, 
+        .input-with-icon select:focus, 
+        .input-with-icon textarea:focus {
+            border-color: #1a76d2;
+            box-shadow: 0 0 0 3px rgba(26, 118, 210, 0.2);
+            outline: none;
+        }
+
+        .input-with-icon textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: #1a76d2;
+            background-color: #f9fbfd;
+        }
+
+        .file-upload i {
+            font-size: 32px;
+            color: #1a76d2;
+            margin-bottom: 10px;
+        }
+
+        .file-upload p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-list {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .file-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .file-remove {
+            color: #e74c3c;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            color: #555;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn.prev {
+            background: #1a76d2;
+            color: white;
+        }
+
+        .nav-btn.prev:hover {
+            background: #0f4c89;
+        }
+
+        .nav-btn.next {
+            background: #1a76d2;
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            background: #0f4c89;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #F6BC02, #2499dd);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(26, 118, 210, 0.3);
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(to right, #2499dd, #F6BC02);
+            box-shadow: 0 6px 15px rgba(11, 63, 114, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+            
+            .registration-section {
+                padding: 30px;
+                max-height: none;
+            }
+            
+            .step-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 10px 15px;
+            }
+            
+            .registration-section {
+                padding: 25px 15px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .step-label {
+                display: none;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="logo">
+            <div class="logo-image">
+                <img src="images/earlycode.png" alt="earlycode logo">
+            </div>
+            <div class="logo-text">
+                <h1>early<span>code</span></h1>
+                <p>Internship Portal</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Burger Menu -->
+    <div class="burger-menu">
+        <div class="burger-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-items">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="index.html#internship-details"><i class="fas fa-info-circle"></i> Internship</a>
+            <a href="index.html#requirements"><i class="fas fa-graduation-cap"></i> Requirements</a>
+            <a href="index.html#faqs"><i class="fas fa-envelope"></i> FAQs</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="registration-section">
+            <div class="registration-header">
+                <h2>Complete Your Registration</h2>
+                <p>Please provide the following information to complete your profile</p>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="step active" id="step1">
+                        <span>1</span>
+                        <div class="step-label">Personal</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <span>2</span>
+                        <div class="step-label">Education</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <span>3</span>
+                        <div class="step-label">SIWES</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <span>4</span>
+                        <div class="step-label">Documents</div>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="registration-form">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="form-step-1">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="required">First Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" placeholder="Enter your first name" required>
+                            </div>
+                            <div class="error-message" id="firstName-error">Please enter your first name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="required">Last Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" placeholder="Enter your last name" required>
+                            </div>
+                            <div class="error-message" id="lastName-error">Please enter your last name</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="otherNames">Other Names (Optional)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="otherNames" placeholder="Enter your other names (if any)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dob" class="required">Date of Birth</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar"></i>
+                                <input type="date" id="dob" required>
+                            </div>
+                            <div class="error-message" id="dob-error">Please enter your date of birth</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="required">Gender</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-venus-mars"></i>
+                                <select id="gender" required>
+                                    <option value="" disabled selected>Select your gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="gender-error">Please select your gender</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="required">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="example@email.com" required>
+                        </div>
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="required">Phone Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" class="required">Contact Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <textarea id="address" placeholder="Enter your complete address" required></textarea>
+                        </div>
+                        <div class="error-message" id="address-error">Please enter your address</div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <div></div> <!-- Empty div for spacing -->
+                        <button type="button" class="nav-btn next" onclick="showStep(2)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Education Information -->
+                <div class="form-step" id="form-step-2">
+                    <div class="form-group">
+                        <label for="institution" class="required">Name of Educational Institution</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-school"></i>
+                            <input type="text" id="institution" placeholder="Enter your school name" required>
+                        </div>
+                        <div class="error-message" id="institution-error">Please enter your institution name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="institutionAddress" class="required">Institution Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <textarea id="institutionAddress" placeholder="Enter your school address" required></textarea>
+                        </div>
+                        <div class="error-message" id="institutionAddress-error">Please enter your institution address</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="course" class="required">Course of Study</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-book"></i>
+                                <input type="text" id="course" placeholder="e.g. Computer Science" required>
+                            </div>
+                            <div class="error-message" id="course-error">Please enter your course of study</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="level" class="required">Current Level/Year</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                                <select id="level" required>
+                                    <option value="" disabled selected>Select your level</option>
+                                    <option value="100">100 Level</option>
+                                    <option value="200">200 Level</option>
+                                    <option value="300">300 Level</option>
+                                    <option value="400">400 Level</option>
+                                    <option value="500">500 Level</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="level-error">Please select your level</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="supervisorName" class="required">Institution Supervisor Name</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user-tie"></i>
+                                <input type="text" id="supervisorName" placeholder="Enter supervisor's name" required>
+                            </div>
+                            <div class="error-message" id="supervisorName-error">Please enter supervisor's name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisorPhone" class="required">Supervisor Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="supervisorPhone" placeholder="Enter supervisor's phone number" required>
+                            </div>
+                            <div class="error-message" id="supervisorPhone-error">Please enter a valid phone number</div>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <button type="button" class="nav-btn prev" onclick="showStep(1)">Previous</button>
+                        <button type="button" class="nav-btn next" onclick="showStep(3)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: SIWES Information -->
+                <div class="form-step" id="form-step-3">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="siwesDuration" class="required">SIWES Duration (Months)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-clock"></i>
+                                <input type="number" id="siwesDuration" placeholder="e.g. 6" min="1" max="12" required>
+                            </div>
+                            <div class="error-message" id="siwesDuration-error">Please enter SIWES duration</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trainingProgram" class="required">Training Program</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-laptop-code"></i>
+                                <select id="trainingProgram" required>
+                                    <option value="" disabled selected>Select training program</option>
+                                    <option value="frontend">Frontend Development</option>
+                                    <option value="backend">Backend Development</option>
+                                    <option value="fullstack">Full Stack Development</option>
+                                    <option value="uiux">UI/UX Design</option>
+                                    <option value="data">Data Science</option>
+                                    <option value="cyber">Cybersecurity</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="trainingProgram-error">Please select a training program</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate" class="required">Start Date</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar-check"></i>
+                                <input type="date" id="startDate" required>
+                            </div>
+                            <div class="error-message" id="startDate-error">Please select start date</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="required">End Date</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-calendar-times"></i>
+                                <input type="date" id="endDate" required>
+                            </div>
+                            <div class="error-message" id="endDate-error">Please select end date</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="programDuration" class="required">Program Duration (Weeks)</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                                <input type="number" id="programDuration" placeholder="e.g. 24" min="1" max="52" required>
+                            </div>
+                            <div class="error-message" id="programDuration-error">Please enter program duration</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="campus" class="required">Campus</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-map-pin"></i>
+                                <select id="campus" required>
+                                    <option value="" disabled selected>Select campus</option>
+                                    <option value="main">Main Campus</option>
+                                    <option value="branch1">Branch Campus 1</option>
+                                    <option value="branch2">Branch Campus 2</option>
+                                    <option value="online">Online</option>
+                                </select>
+                            </div>
+                            <div class="error-message" id="campus-error">Please select a campus</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expectations">What do you hope to achieve from this internship?</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-bullseye"></i>
+                            <textarea id="expectations" placeholder="Describe your goals and expectations for this internship program"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <button type="button" class="nav-btn prev" onclick="showStep(2)">Previous</button>
+                        <button type="button" class="nav-btn next" onclick="showStep(4)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Document Uploads -->
+                <div class="form-step" id="form-step-4">
+                    <div class="form-group">
+                        <label class="required">Required Documents</label>
+                        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Please upload the following documents in PDF or PNG format (Max 5MB per file)</p>
+                        
+                        <div class="file-upload" id="documentsUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload or drag and drop</p>
+                            <p style="font-size: 12px;">PDF or PNG (Max. 5MB)</p>
+                            <input type="file" id="fileInput" accept=".pdf,.png" multiple>
+                        </div>
+                        
+                        <div class="file-list" id="fileList">
+                            <!-- Uploaded files will appear here -->
+                        </div>
+                        <div class="error-message" id="file-error">Please upload at least one document</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Documents to Upload (Optional)</label>
+                        <div style="font-size: 14px; color: #666;">
+                            <p>You may upload the following documents if available:</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>SIWES Approval Letter</li>
+                                <li>School ID Card</li>
+                                <li>CV/Resume</li>
+                                <li>Other relevant certificates</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-buttons">
+                        <button type="button" class="nav-btn prev" onclick="showStep(3)">Previous</button>
+                        <button type="submit" class="submit-button">Complete Registration</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Multi-step form functionality
+        let currentStep = 1;
+        const totalSteps = 4;
+        const uploadedFiles = [];
+        
+        function showStep(step) {
+            // Validate current step before proceeding
+            if (step > currentStep) {
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+            }
+            
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(formStep => {
+                formStep.classList.remove('active');
+            });
+            
+            // Show the selected step
+            document.getElementById('form-step-' + step).classList.add('active');
+            
+            // Update progress bar
+            document.querySelectorAll('.step').forEach((el, index) => {
+                if (index < step) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            
+            // Update progress bar line
+            const progressPercentage = ((step-1)/(totalSteps-1)) * 100;
+            document.querySelector('.progress-bar::after').style.width = `${progressPercentage}%`;
+            
+            currentStep = step;
+            
+            // Scroll to top of form
+            document.querySelector('.registration-section').scrollTo(0, 0);
+        }
+        
+        function validateStep(step) {
+            let isValid = true;
+            
+            if (step === 1) {
+                // Validate personal information
+                const firstName = document.getElementById('firstName');
+                const lastName = document.getElementById('lastName');
+                const dob = document.getElementById('dob');
+                const gender = document.getElementById('gender');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                const address = document.getElementById('address');
+                
+                if (!firstName.value.trim()) {
+                    showError('firstName-error');
+                    isValid = false;
+                } else {
+                    hideError('firstName-error');
+                }
+                
+                if (!lastName.value.trim()) {
+                    showError('lastName-error');
+                    isValid = false;
+                } else {
+                    hideError('lastName-error');
+                }
+                
+                if (!dob.value) {
+                    showError('dob-error');
+                    isValid = false;
+                } else {
+                    hideError('dob-error');
+                }
+                
+                if (!gender.value) {
+                    showError('gender-error');
+                    isValid = false;
+                } else {
+                    hideError('gender-error');
+                }
+                
+                if (!email.value.trim() || !isValidEmail(email.value)) {
+                    showError('email-error');
+                    isValid = false;
+                } else {
+                    hideError('email-error');
+                }
+                
+                if (!phone.value.trim() || !isValidPhone(phone.value)) {
+                    showError('phone-error');
+                    isValid = false;
+                } else {
+                    hideError('phone-error');
+                }
+                
+                if (!address.value.trim()) {
+                    showError('address-error');
+                    isValid = false;
+                } else {
+                    hideError('address-error');
+                }
+            } else if (step === 2) {
+                // Validate education information
+                const institution = document.getElementById('institution');
+                const institutionAddress = document.getElementById('institutionAddress');
+                const course = document.getElementById('course');
+                const level = document.getElementById('level');
+                const supervisorName = document.getElementById('supervisorName');
+                const supervisorPhone = document.getElementById('supervisorPhone');
+                
+                if (!institution.value.trim()) {
+                    showError('institution-error');
+                    isValid = false;
+                } else {
+                    hideError('institution-error');
+                }
+                
+                if (!institutionAddress.value.trim()) {
+                    showError('institutionAddress-error');
+                    isValid = false;
+                } else {
+                    hideError('institutionAddress-error');
+                }
+                
+                if (!course.value.trim()) {
+                    showError('course-error');
+                    isValid = false;
+                } else {
+                    hideError('course-error');
+                }
+                
+                if (!level.value) {
+                    showError('level-error');
+                    isValid = false;
+                } else {
+                    hideError('level-error');
+                }
+                
+                if (!supervisorName.value.trim()) {
+                    showError('supervisorName-error');
+                    isValid = false;
+                } else {
+                    hideError('supervisorName-error');
+                }
+                
+                if (!supervisorPhone.value.trim() || !isValidPhone(supervisorPhone.value)) {
+                    showError('supervisorPhone-error');
+                    isValid = false;
+                } else {
+                    hideError('supervisorPhone-error');
+                }
+            } else if (step === 3) {
+                // Validate SIWES information
+                const siwesDuration = document.getElementById('siwesDuration');
+                const trainingProgram = document.getElementById('trainingProgram');
+                const startDate = document.getElementById('startDate');
+                const endDate = document.getElementById('endDate');
+                const programDuration = document.getElementById('programDuration');
+                const campus = document.getElementById('campus');
+                
+                if (!siwesDuration.value || siwesDuration.value < 1) {
+                    showError('siwesDuration-error');
+                    isValid = false;
+                } else {
+                    hideError('siwesDuration-error');
+                }
+                
+                if (!trainingProgram.value) {
+                    showError('trainingProgram-error');
+                    isValid = false;
+                } else {
+                    hideError('trainingProgram-error');
+                }
+                
+                if (!startDate.value) {
+                    showError('startDate-error');
+                    isValid = false;
+                } else {
+                    hideError('startDate-error');
+                }
+                
+                if (!endDate.value) {
+                    showError('endDate-error');
+                    isValid = false;
+                } else {
+                    hideError('endDate-error');
+                }
+                
+                if (!programDuration.value || programDuration.value < 1) {
+                    showError('programDuration-error');
+                    isValid = false;
+                } else {
+                    hideError('programDuration-error');
+                }
+                if (!campus.value) {
+                    showError('campus-error');
+                    isValid = false;
+                } else {
+                    hideError('campus-error');
+                }
+            } else if (step === 4) {
+                // Validate document upload
+                if (uploadedFiles.length === 0) {
+                    showError('file-error');
+                    isValid = false;
+                } else {
+                    hideError('file-error');
+                }
+            }
+            
+            return isValid;
+        }
+        
+        function showError(errorId) {
+            document.getElementById(errorId).style.display = 'block';
+        }
+        
+        function hideError(errorId) {
+            document.getElementById(errorId).style.display = 'none';
+        }
+        
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function isValidPhone(phone) {
+            // Simple phone validation - can be enhanced based on requirements
+            const re = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+            return re.test(phone);
+        }
+        
+        // File upload functionality
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const documentsUpload = document.getElementById('documentsUpload');
+        
+        documentsUpload.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        documentsUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            documentsUpload.style.borderColor = '#1a76d2';
+            documentsUpload.style.backgroundColor = '#f0f7ff';
+        });
+        
+        documentsUpload.addEventListener('dragleave', () => {
+            documentsUpload.style.borderColor = '#ddd';
+            documentsUpload.style.backgroundColor = '#fff';
+        });
+        
+        documentsUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            documentsUpload.style.borderColor = '#ddd';
+            documentsUpload.style.backgroundColor = '#fff';
+            
+            if (e.dataTransfer.files.length > 0) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                handleFiles(fileInput.files);
+            }
+        });
+        
+        function handleFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`File ${file.name} is too large. Maximum size is 5MB.`);
+                    continue;
+                }
+                
+                // Check file type
+                const fileType = file.type;
+                if (fileType !== 'application/pdf' && fileType !== 'image/png') {
+                    alert(`File ${file.name} must be a PDF or PNG.`);
+                    continue;
+                }
+                
+                // Add to uploaded files
+                uploadedFiles.push(file);
+                
+                // Display file in list
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-remove" data-index="${uploadedFiles.length - 1}">
+                        <i class="fas fa-times"></i>
+                    </div>
+                `;
+                
+                fileList.appendChild(fileItem);
+                
+                // Add event listener to remove button
+                const removeBtn = fileItem.querySelector('.file-remove');
+                removeBtn.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    uploadedFiles.splice(index, 1);
+                    fileItem.remove();
+                    
+                    // Update data-index for remaining files
+                    const allRemoveBtns = document.querySelectorAll('.file-remove');
+                    allRemoveBtns.forEach((btn, idx) => {
+                        btn.setAttribute('data-index', idx);
+                    });
+                });
+            }
+            
+            // Clear the input
+            fileInput.value = '';
+        }
+        
+// Form submission
+document.getElementById('registration-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (validateStep(4)) {
+        // All validation passed, show custom modal
+        const modal = document.getElementById('successModal');
+        modal.style.display = 'flex';
+        
+        // Set up redirect when OK button is clicked
+        document.getElementById('modalOkButton').onclick = function() {
+            window.location.href = 'status.html';
+        };
+        
+        // Note: In a real application, you would typically send the data to a server first
+        // and only show success/redirect upon successful submission
+    }
+});
+        
+        // Burger menu functionality
+        const burgerMenu = document.querySelector('.burger-menu');
+        const burgerBtn = document.querySelector('.burger-btn');
+        
+        burgerBtn.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!burgerMenu.contains(e.target)) {
+                burgerMenu.classList.remove('active');
+            }
+        });
+        
+        // Initialize date limits
+        const today = new Date();
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        
+        // Set minimum start date to today
+        startDateInput.min = today.toISOString().split('T')[0];
+        
+        // Update end date min when start date changes
+        startDateInput.addEventListener('change', () => {
+            if (startDateInput.value) {
+                const minEndDate = new Date(startDateInput.value);
+                minEndDate.setDate(minEndDate.getDate() + 1);
+                endDateInput.min = minEndDate.toISOString().split('T')[0];
+                
+                // If end date is before new min, clear it
+                if (endDateInput.value && new Date(endDateInput.value) < minEndDate) {
+                    endDateInput.value = '';
+                }
+            }
+        });
+    </script>
+
+    <div id="successModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; max-width: 400px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
+        <div style="font-size: 48px; color: #2ecc71; margin-bottom: 15px;">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 style="color: #0f4c89; margin-bottom: 15px;">Registration Successful!</h2>
+        <p style="color: #666; margin-bottom: 25px;">Your application has been submitted successfully. You will now be redirected to check your status.</p>
+        <button id="modalOkButton" style="background: linear-gradient(to right, #1a76d2, #0f4c89); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+            OK
+        </button>
+    </div>
+</div>
+
+</body>
+</html>
